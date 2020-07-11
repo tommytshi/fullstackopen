@@ -8,17 +8,28 @@ const App = () => {
 
   const addName = (event) => {
     event.preventDefault()
+
+    const all_names = persons.map(person => person.name)
+
+    if (all_names.includes(newName)) {
+    window.alert(`${newName} is already added to the phonebook.`)
+  } else {
+    console.log(`added ${newName}`)
     const personObject = {
       name : newName,
     }
+
     setPersons(persons.concat(personObject))
     setNewName('')
+  }
   }
 
   const handleContactChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
   }
+
+
 
 
   return (
@@ -37,8 +48,12 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-      {persons.map(person => <li> {person.name} </li>)}
+      {persons.map(person => <li key={person.name}> {person.name} </li>)}
       </ul>
+      <h2> test login </h2>
+
+
+
     </div>
   )
 }

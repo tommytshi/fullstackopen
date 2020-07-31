@@ -1,4 +1,8 @@
 import React, { useState } from 'react'
+import AddContact from './components/AddContact'
+import ContactInfo from './components/ContactInfo'
+import Filter from './components/Filter'
+
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -24,13 +28,13 @@ const App = () => {
 
     if (all_names.includes(newName)) {
     window.alert(`${newName} is already added to the phonebook.`)
-  } else {
+    } else {
     console.log(`added ${newName}`)
 
     setPersons(persons.concat(personObject))
     setNewName('')
     setNewNumber('')
-  }
+    }
   }
 
   const handleContactChange = (event) => {
@@ -56,40 +60,25 @@ const App = () => {
     <div>
       <h1>Phonebook</h1>
       <h2> Search contact </h2>
-      <form>
-        <div>
-        filter shown with: <input
-          value = {searchName}
-          onChange={handleSearchChange}
-        />
-        </div>
-      </form>
+      
+      <Filter 
+        value={searchName}
+        onChange={handleSearchChange}
+      />
 
-      <h2> Add new </h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input
-            value={newName}
-            onChange={handleContactChange}
-            />
-        </div>
-        <div>
-          number: <input
-            value={newNumber}
-            onChange={handleNumberChange}
-            />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <h2> Add New Contact </h2>
+
+      <AddContact 
+        onSubmit={addPerson}
+        name={{value: newName, onChange: handleContactChange}}
+        number={{value: newNumber, onChange: handleNumberChange}}
+      />
+
       <h2>Numbers</h2>
-      <ul>
-      {personsToShow.map(person => <li key={person.name}> {person.name} {person.number} </li>)}
 
-      </ul>
-
-
+      <ContactInfo
+        persons={personsToShow}
+      />
 
     </div>
   )
